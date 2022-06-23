@@ -34,7 +34,7 @@ workerpool.InitJobQueue()
 and add job to pool:
 ```go
 job := workerpool.NewJob(func(ctx context.Context) error {
-	// simple job, replace it :D
+    // Simple job, replace it :D
     time.Sleep(time.Second)
     log.Println("I am job, message: ", msg)
     return nil
