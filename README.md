@@ -16,14 +16,14 @@ $ cd go-workerpool
 $ go build
 ```
 
-##Run
+## Run
 ```
 $ ./worker-pool
 ```
 
 Then you can go to [https://localhost:8080/test?msg=Hello worker](https://localhost:8080/test?msg=Hello%20worker) and check log. 
 
-##Apply in your project
+## Apply in your project
 You can copy workerpool folder to your project. Init worker pool:
 ````go
 dispatch := workerpool.NewDispatcher(10) // start 10 workers
