@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"net/http"
-	"time"
 	"worker-pool/workerpool"
 )
 
@@ -18,11 +17,11 @@ func main() {
 
 	r.GET("/test", func(c *gin.Context) {
 		msg := c.DefaultQuery("msg", "default message")
-		job := workerpool.NewJob(func(ctx context.Context) error {
-			time.Sleep(time.Second)
-			log.Println("I am job, message: ", msg)
+		job := workerpool.NewJob(func(ctx context.Context, args []interface{}) error {
+			log.Println("I am job, message: ", args[0])
 			return nil
 		})
+		job.Args = append(job.Args, msg)
 		workerpool.JobQueue <- job
 		c.JSON(http.StatusOK, gin.H{
 			"message": msg,

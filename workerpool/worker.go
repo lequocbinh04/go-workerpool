@@ -5,10 +5,11 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-type JobHandler func(ctx context.Context) error
+type JobHandler func(ctx context.Context, args []interface{}) error
 
 type Job struct {
 	handler JobHandler
+	Args    []interface{}
 }
 
 func NewJob(handler JobHandler) Job {
@@ -45,7 +46,7 @@ func (w Worker) Start(ctx context.Context) {
 
 			select {
 			case job := <-w.JobChannel:
-				if err := job.handler(ctx); err != nil {
+				if err := job.handler(ctx, job.Args); err != nil {
 					log.Errorf("Error when doing job: %s", err.Error())
 				}
 
